@@ -1,0 +1,213 @@
+@startuml
+skinparam dpi 300
+skinparam linetype ortho
+
+'https://plantuml.com/class-diagram
+hide empty members
+set separator ::
+
+
+package utilities {
+    class VariadicAggregation<T>
+}
+
+package pins {
+    class Pin
+
+    class OutputPin extends Pin
+
+    class InputPin extends Pin
+
+    class DigitalIn extends InputPin
+
+    class DigitalOut extends OutputPin
+
+
+    class PinArray<T extends Pin>
+
+    class OutputPinArray<T extends OutputPin> extends PinArray
+
+    class InputPinArrayBase<T extends InputPin> extends PinArray
+
+
+    class "InputPinArray<DigitalIn>" as InputPinArrayDigitalIn extends InputPinArrayBase
+
+    class PinPair
+}
+
+
+class Display {
+    + {static} static constexpr int Size
+    + Display();
+    + void begin()
+    + void refresh()
+    + void append(char c)
+    + void del()
+    + void clear()
+    + void set(int number)
+    + void flash()
+    + void error()
+    + ~Display()
+    + Sign sign
+    + State state
+}
+
+enum State {
+    CALC
+    RESULT
+    ERROR
+}
+
+enum Sign {
+    POSITIVE
+    NEGATIVE
+}
+
+class Action
+
+class Actions
+
+enum ActionTypes {
+    RESET
+    DEL
+    CALCULATE
+}
+
+
+class Operation
+
+class Operations
+
+enum OperationTypes {
+    ADDITION
+    SUBTRACTION
+    MULTIPLICATION
+    DIVISION
+    SIGN
+}
+
+
+enum Segments {
+    MIDDLE
+    LEFT_TOP
+    TOP
+    RIGHT_TOP
+    LEFT_BOTTOM
+    BOTTOM
+    RIGHT_BOTTOM
+    POINT
+}
+
+class "VariadicAggregation<Segment>" as VariadicAggregationSegment extends utilities::VariadicAggregation
+
+class Symbols extends VariadicAggregationSegment
+
+class Value
+
+class Calculator {
+    + Display* display
+    + Value memo
+    + Value value
+    + const Operation* activeOperation
+    + const OperationAction* lastOperation
+    + bool next
+    + Calculator(Display* display)
+    + void write(int n)
+    + void del()
+    + void clear()
+    + void reset()
+    + void apply(const Operation* operation)
+    + void calculate()
+    + void toggleSign()
+}
+
+class OperationAction
+
+enum Type {
+    OPERATION
+    ACTION
+    NUMBER
+    NONE
+}
+
+struct ButtonInfo
+
+class Button extends ButtonInfo
+
+class DigitDisplay
+
+class Keypad {
+    + Keypad()
+    + void begin()
+    + const ButtonInfo* read()
+    + ButtonInfo::Type lastPress
+}
+
+enum Color {
+    WHITE
+    BLUE
+    GREEN
+    YELLOW
+    RED
+}
+
+class SignalLight extends pins::DigitalOut
+
+class SignalLights
+
+OperationTypes --+ Operation
+
+Operation --* Operations
+
+Segments --o VariadicAggregationSegment
+
+Symbol --o SymbolString
+
+Action --* Actions
+
+ActionTypes --+ Action
+
+Value --* Calculator
+
+OperationAction --+ Calculator
+
+Calculator --> Display
+
+Calculator --> Operation
+Calculator --> Action
+
+State --* Display
+Sign --* Display
+
+pins::PinPair --* Display
+
+DigitDisplay --* Display
+
+Symbol --o DigitDisplay
+Symbol --> Display
+Symbols --> Display
+
+Type --+ ButtonInfo
+
+Operation --o ButtonInfo
+Action --o ButtonInfo
+
+DigitalIn --* Button
+
+Button --* Keypad
+ButtonInfo --* Keypad
+pins::InputPinArrayDigitalIn --* Keypad
+pins::DigitalIn --* pins::InputPinArrayDigitalIn
+
+
+SignalLight --* SignalLights
+
+SignalLight --> Calculator
+SignalLight --> Display
+SignalLight --> State
+SignalLight --> Keypad
+
+Color --+ SignalLight
+
+'OutputPinArray DigitDisplay
+@enduml
