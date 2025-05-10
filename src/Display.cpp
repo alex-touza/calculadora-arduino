@@ -8,10 +8,10 @@
 
 //const PinSet Display::pins{PinPair{22, 53}, PinPair{18, 21}, PinPair{8, 11}}
 
-const int Display::maxValue = ([](int size) {
+const int Display::maxValue = ([](int digits) {
     int r = 1;
 
-    for (int i = 1; i < size; ++i) {
+    for (int i = 1; i < digits; ++i) {
         r *= 10;
     }
 
