@@ -38,6 +38,8 @@ package pins {
 
 class Display {
     + {static} static constexpr int Size
+    + {static} static constexpr long blinkTime = 60
+    + static const int maxValue
     + Display();
     + void begin()
     + void refresh()
@@ -105,7 +107,6 @@ class Symbols extends VariadicAggregationSegment
 class Value
 
 class Calculator {
-    + Display* display
     + Value memo
     + Value value
     + const Operation* activeOperation
