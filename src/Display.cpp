@@ -72,19 +72,21 @@ void Display::hello() {
     delay(500);
     this->clearAll();
     delay(700);
-    this->showString(&SymbolStrings::hola);
 
 
     if (SymbolStrings::hola.size < Display::Size) {
-        Segment segmentsCycle[]{
-                TOP, LEFT_TOP, LEFT_BOTTOM, BOTTOM, RIGHT_BOTTOM, RIGHT_TOP
-        };
-        for (int i = 0; i < 18; ++i) {
-            this->digits[Display::Size - 1]->clear();
-            this->digits[Display::Size - 1]->on(segmentsCycle[i % 6]);
-            delay(100);
-        }
-    } else delay(12 * 100);
+        this->showString(&SymbolStrings::hola);
+    }
+
+    Segment segmentsCycle[]{
+            TOP, LEFT_TOP, LEFT_BOTTOM, BOTTOM, RIGHT_BOTTOM, RIGHT_TOP
+    };
+    for (int i = 0; i < 18; ++i) {
+        this->digits[Display::Size - 1]->clear();
+        this->digits[Display::Size - 1]->on(segmentsCycle[i % 6]);
+        delay(100);
+    }
+
     this->clear();
     this->refresh();
 }
