@@ -31,9 +31,7 @@ const Operation Operations::division(Operation::OperationTypes::DIVISION, operat
 // pre: b != 0
 const Operation Operations::modulo(Operation::OperationTypes::MODULO, [](int a, int b) {
     // Fer que l'operador % funcioni igual que a Python (floored division)
-    if (a == 0) return 0;
-    int m = a % b;
-    return (a < 0) == (b < 0) ? m : m + b;
+    return ((a % b) + b) % b;
 });
 
 //const Operation Operations::sign(Operation::OperationTypes::SIGN, [](int a) { return -a; });
