@@ -113,6 +113,9 @@ void Calculator::clear() {
 
 void Calculator::reset() {
     this->memo = Value();
+    this->activeOperation = nullptr;
+    delete this->lastOperation;
+    this->lastOperation = nullptr;
     this->clear();
 }
 
