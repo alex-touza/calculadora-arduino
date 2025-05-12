@@ -74,6 +74,7 @@ void Calculator::calculate() {
             return;
         }
 
+        if (this->lastOperation != nullptr) delete this->lastOperation;
         this->lastOperation = new OperationAction{this->activeOperation, this->value};
         if (this->memo.empty()) {
             if (this->activeOperation->unary == nullptr) goto end;
