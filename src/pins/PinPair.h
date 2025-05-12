@@ -27,5 +27,21 @@ struct PinPair {
     }
 };
 
+struct PinGroups : PinPair {
+    const int groupSize;
+    PinGroup(byte start, byte end, unsigned int groupSize) : Pinpair(start, end), groupSize(groupSize) {
+        static_assert(this->count() % this->groupSize == 0);
+    }
+
+    constexpr int groupsCount() const {
+        return this->count() / this->groupSize;
+    }
+
+    PinPair getChunk(int i) {
+        i %= this->groupsCount;
+        
+        return PinPair(this->start + this->groupSize*i, this->start + this->groupSize * (i+1) - 1);
+    }
+}
 
 #endif //CALCULADORA_ARDUINO_PINPAIR_H

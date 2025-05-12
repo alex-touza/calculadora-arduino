@@ -27,8 +27,8 @@ public:
         NEGATIVE
     };
 private:
-    static constexpr PinPair pins{8, 47};
-    //static const PinSet pins;
+    static constexpr PinGroups pins{8, 47, DigitDisplay::pinsNumber};
+     //static const PinSet pins;
 
     DigitDisplay* digits[Size]{};
 

@@ -39,11 +39,12 @@ Display::Display() {
     this->input[Size - 1] = '\0';
 
     //this->digits = static_cast<DigitDisplay*>(::operator new[](Size * sizeof(DigitDisplay)));
-
+    
     int i = 0;
     for (auto& ptr : this->digits) {
-        ptr = new DigitDisplay(Display::pins.start + DigitDisplay::pinsNumber * i,
-                               Display::pins.start + DigitDisplay::pinsNumber * (i + 1) - 1);
+        ptr = new DigitDisplay(Display::pins.getChunk(i));
+        //ptr = new DigitDisplay(Display::pins.start + DigitDisplay::pinsNumber * i,
+        //                       Display::pins.start + DigitDisplay::pinsNumber * (i + 1) - 1);
         ++i;
     }
 }
